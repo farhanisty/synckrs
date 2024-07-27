@@ -18,6 +18,7 @@ class InformatikaMatkulScraper(MatkulScraper):
     def generate(self, list_string: list[str]) -> list[Matkul]:
         result = list[Matkul]()
 
+        idx = 1
         for x in list_string:
             if x == "\n":
                 continue
@@ -28,10 +29,11 @@ class InformatikaMatkulScraper(MatkulScraper):
 
             matkul = re.split("\t", x)
 
-            res = Matkul(matkul[0], matkul[1], matkul[2], matkul[3],
+            res = Matkul(idx, matkul[0], matkul[1], matkul[2], matkul[3],
                          matkul[4], matkul[5],
                          Jadwal.buildFromString(matkul[6]), matkul[7])
 
+            idx += 1
             result.append(res)
 
         return result

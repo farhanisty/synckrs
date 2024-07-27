@@ -21,7 +21,6 @@ hasil = scrapper.union(listMatkulSem, scrapper.generate(
     FileOperation.read("data.src"))
 )
 
-print(len(hasil))
 
 # Jadwal.buildFromString(hasil[0].jadwal)
 

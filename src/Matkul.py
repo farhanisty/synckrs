@@ -1,5 +1,6 @@
 class Matkul:
-    def __init__(self, prodi, kode, nama, sks, kelas, jml_mahasiswa, jadwal, ruangan):
+    def __init__(self, id, prodi, kode, nama, sks, kelas, jml_mahasiswa, jadwal, ruangan):
+        self.id = id
         self.prodi = prodi
         self.kode = kode
         self.nama = nama
