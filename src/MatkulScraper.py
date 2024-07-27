@@ -29,6 +29,9 @@ class InformatikaMatkulScraper(MatkulScraper):
 
             matkul = re.split("\t", x)
 
+            if matkul[4].upper().strip() == "IF-H":
+                continue
+
             res = Matkul(idx, matkul[0], matkul[1], matkul[2], matkul[3],
                          matkul[4], matkul[5],
                          Jadwal.buildFromString(matkul[6]), matkul[7])
