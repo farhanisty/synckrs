@@ -1,5 +1,6 @@
 from src.FileOperation import FileOperation
 from src.MatkulScraper import InformatikaMatkulScraper
+from src.ScheduleCreator import ScheduleCreator
 
 listMatkulSem = [
     "Bahasa Indonesia",
@@ -21,6 +22,9 @@ hasil = scrapper.union(listMatkulSem, scrapper.generate(
     FileOperation.read("data.src"))
 )
 
+scheduleCreator = ScheduleCreator(hasil)
+scheduleCreator.choose(19)
+scheduleCreator.showAvailable()
 
 # Jadwal.buildFromString(hasil[0].jadwal)
 
