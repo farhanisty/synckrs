@@ -1,6 +1,9 @@
 from src.FileOperation import FileOperation
 from src.MatkulScraper import InformatikaMatkulScraper
 from src.ScheduleCreator import ScheduleCreator
+from src.Jam import Jam
+from src.IntervalJam import IntervalJam
+from src.DiscontinueIntervalJam import DiscontinueIntervalJam
 
 listMatkulSem = [
     "Bahasa Indonesia",
@@ -17,18 +20,18 @@ listMatkulSem = [
     "Riset Operasi",
 ]
 
+# satu = IntervalJam(Jam(7, 30), Jam(10, 0))
+# print(satu.isInRange(IntervalJam(Jam(10, 0), Jam(11, 45))))
 scrapper = InformatikaMatkulScraper()
 hasil = scrapper.union(listMatkulSem, scrapper.generate(
     FileOperation.read("data.src"))
 )
 
 scheduleCreator = ScheduleCreator(hasil)
-scheduleCreator.choose(19)
+
+scheduleCreator.choose(20)
+scheduleCreator.choose(165)
+
+scheduleCreator.showChoosed()
 scheduleCreator.showAvailable()
-
-# Jadwal.buildFromString(hasil[0].jadwal)
-
-# id = 1
-# for matkul in hasil:
-#     print(f"{id}, {matkul.nama}, {matkul.jadwal}, {matkul.dosen}")
-#     id += 1
+scheduleCreator.showUnavailable()

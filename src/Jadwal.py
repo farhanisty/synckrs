@@ -1,11 +1,14 @@
 from .Jam import Jam
+from .IntervalJam import IntervalJam
 
 
 class Jadwal:
-    def __init__(self, hari, awal, akhir):
-        self.hari = hari
-        self.awal = awal
-        self.akhir = akhir
+    def __init__(self, hari: str, interval: IntervalJam):
+        self.hari = hari.lower().strip()
+        self.interval = interval
+
+    def __str__(self):
+        return self.hari + " " + str(self.interval)
 
     @staticmethod
     def buildFromString(x: str):
@@ -13,6 +16,6 @@ class Jadwal:
         jam = jadwal[1].split("-")
 
         return Jadwal(
-            jadwal[0], Jam.buildFromString(jam[0]),
-            Jam.buildFromString(jam[1])
+            jadwal[0], IntervalJam(Jam.buildFromString(
+                jam[0]), Jam.buildFromString(jam[1]))
         )
