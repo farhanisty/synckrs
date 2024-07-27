@@ -1,6 +1,6 @@
 from .Matkul import Matkul
 from .DiscontinueIntervalJam import DiscontinueIntervalJam
-from prettytable import PrettyTable
+from .render.RenderEngine import RenderEngine
 
 
 class ScheduleCreator:
@@ -13,6 +13,9 @@ class ScheduleCreator:
 
         for x in range(0, 6):
             self.days.append(DiscontinueIntervalJam())
+
+    def changeRender(self, renderEngine: RenderEngine):
+        self.renderEngine = renderEngine
 
     def choose(self, id: int):
         index = self.matkuls_id.index(id)
@@ -44,23 +47,14 @@ class ScheduleCreator:
             self.removeFromMatkuls(pop_id - no)
             no += 1
 
-    def showAvailable(self):
-        self.printTable(self.matkuls)
+    def getAvailable(self):
+        return self.matkuls
 
-    def showChoosed(self):
-        self.printTable(self.choosed)
+    def getUnavailable(self):
+        return self.unavailable_matkuls
 
-    def showUnavailable(self):
-        self.printTable(self.unavailable_matkuls)
-
-    def printTable(self, matkuls: list[Matkul]):
-        table = PrettyTable(["id", "Matkul", "SKS", "Jadwal", "Dosen"])
-
-        for matkul in matkuls:
-            table.add_row([matkul.id, matkul.nama, matkul.sks,
-                          matkul.jadwal, matkul.dosen[0]])
-
-        print(table)
+    def getChoosed(self):
+        return self.choosed
 
     def removeFromMatkuls(self, index):
         self.matkuls.pop(index)

@@ -1,9 +1,9 @@
 from src.FileOperation import FileOperation
 from src.MatkulScraper import InformatikaMatkulScraper
 from src.ScheduleCreator import ScheduleCreator
-from src.Jam import Jam
-from src.IntervalJam import IntervalJam
-from src.DiscontinueIntervalJam import DiscontinueIntervalJam
+from src.render.RenderInvoker import RenderInvoker
+from src.render.PrettyTableRenderEngine import PrettyTableRenderEngine
+
 
 listMatkulSem = [
     "Bahasa Indonesia",
@@ -20,18 +20,16 @@ listMatkulSem = [
     "Riset Operasi",
 ]
 
-# satu = IntervalJam(Jam(7, 30), Jam(10, 0))
-# print(satu.isInRange(IntervalJam(Jam(10, 0), Jam(11, 45))))
 scrapper = InformatikaMatkulScraper()
 hasil = scrapper.union(listMatkulSem, scrapper.generate(
     FileOperation.read("data.src"))
 )
+
+renderInvoker = RenderInvoker(PrettyTableRenderEngine())
 
 scheduleCreator = ScheduleCreator(hasil)
 
 scheduleCreator.choose(20)
 scheduleCreator.choose(165)
 
-scheduleCreator.showChoosed()
-scheduleCreator.showAvailable()
-scheduleCreator.showUnavailable()
+renderInvoker.render(scheduleCreator.getAvailable())
