@@ -1,6 +1,7 @@
 from src.FileOperation import FileOperation
 from src.MatkulScraper import InformatikaMatkulScraper
 from src.ScheduleCreator import ScheduleCreator
+from src.sorter.DosenSorter import DosenSorter
 
 listMatkulSem = [
     "Bahasa Indonesia",
@@ -27,5 +28,6 @@ scheduleCreator = ScheduleCreator(hasil)
 scheduleCreator.choose(20)
 scheduleCreator.choose(165)
 
-scheduleCreator.showChoosen()
+scheduleCreator.getRenderInvoker().sort(DosenSorter()).changeMode("DESC")
+
 scheduleCreator.showUnavailable()

@@ -55,6 +55,9 @@ class ScheduleCreator:
             self.removeFromMatkuls(pop_id - no)
             no += 1
 
+    def getRenderInvoker(self):
+        return self.renderInvoker
+
     def showAvailable(self):
         self.renderInvoker.render(self.getAvailable())
 
