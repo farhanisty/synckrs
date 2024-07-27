@@ -1,6 +1,11 @@
 from .Matkul import Matkul
+from .MatkulChoosedChecker import MatkulChoosedChecker
 from .DiscontinueIntervalJam import DiscontinueIntervalJam
-from .render.RenderEngine import RenderEngine
+from .JamAvailibilityChecker import JamAvailibilityChecker
+from .UnavailableMatkul import UnavailableMatkul
+from .render.RenderInvoker import RenderInvoker
+from .render.PrettyTableRenderEngine import PrettyTableRenderEngine
+from .render.UnavailablePrettyTableRenderEngine import UnavailablePrettyTableRenderEngine
 
 
 class ScheduleCreator:
@@ -10,12 +15,10 @@ class ScheduleCreator:
         self.matkuls_id = list(map(lambda x: x.id, matkuls))
         self.choosed = list[Matkul]()
         self.days = list[DiscontinueIntervalJam]()
+        self.renderInvoker = RenderInvoker(PrettyTableRenderEngine())
 
         for x in range(0, 6):
             self.days.append(DiscontinueIntervalJam())
-
-    def changeRender(self, renderEngine: RenderEngine):
-        self.renderEngine = renderEngine
 
     def choose(self, id: int):
         index = self.matkuls_id.index(id)
@@ -32,12 +35,17 @@ class ScheduleCreator:
         pop_ids = list[int]()
 
         for mt in self.matkuls:
-            if mt.nama == matkul.nama:
-                self.unavailable_matkuls.append(mt)
-                pop_ids.append(id)
+            availibilityChekcer = MatkulChoosedChecker()
+            availibilityChekcer.setNext(JamAvailibilityChecker(
+                self.days[self.dayToInt(mt.jadwal.hari)]
+            ))
 
-            if self.days[self.dayToInt(mt.jadwal.hari)].isInRange(mt.jadwal.interval):
-                self.unavailable_matkuls.append(mt)
+            reasonIfUnavailable = availibilityChekcer.check(matkul, mt, [])
+
+            if len(reasonIfUnavailable):
+                unavailable_matkul = UnavailableMatkul.cast(mt)
+                unavailable_matkul.reason.extend(reasonIfUnavailable)
+                self.unavailable_matkuls.append(unavailable_matkul)
                 pop_ids.append(id)
 
             id += 1
@@ -46,6 +54,23 @@ class ScheduleCreator:
         for pop_id in pop_ids:
             self.removeFromMatkuls(pop_id - no)
             no += 1
+
+    def showAvailable(self):
+        self.renderInvoker.render(self.getAvailable())
+
+    def showUnavailable(self):
+        self.renderInvoker.changeRenderEngine(
+            UnavailablePrettyTableRenderEngine()
+        )
+
+        self.renderInvoker.render(self.getUnavailable())
+
+        self.renderInvoker.changeRenderEngine(
+            PrettyTableRenderEngine()
+        )
+
+    def showChoosen(self):
+        self.renderInvoker.render(self.getChoosed())
 
     def getAvailable(self):
         return self.matkuls
