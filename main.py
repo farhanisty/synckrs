@@ -5,6 +5,7 @@ from src.ScheduleCreator import ScheduleCreator
 from src.sorter.DosenSorter import DosenSorter
 from src.sorter.MatkulNameSorter import MatkulNameSorter
 from src.sorter.IdMatkulSorter import IdMatkulSorter
+from src.sorter.KodeMatkulSorter import KodeMatkulSorter
 
 list_matkul = FileOperation.read("data.src")
 
@@ -20,6 +21,7 @@ schedule_creator = ScheduleCreator(filter_matkul)
 schedule_creator.choose(70)
 schedule_creator.choose(84)
 
+schedule_creator.getRenderInvoker().sort(KodeMatkulSorter())
 schedule_creator.showChoosen()
 
 schedule_creator.getRenderInvoker().sort(MatkulNameSorter())

@@ -131,6 +131,7 @@ Setelah mengambil suatu jadwal, secara otomatis akan mengeliminasi jadwal-jadwal
 from src.sorter.DosenSorter import DosenSorter # sort berdasarkan nama dosen
 from src.sorter.MatkulNameSorter import MatkulNameSorter # sort berdasarkan nama matkul
 from src.sorter.IdMatkulSorter import IdMatkulSorter # sort berdasarkan id matkul/hari
+from src.sorter.KodeMatkulSorter import KodeMatkulSorter # sort berdasarkan kode matkul
 
 ...
 
@@ -159,6 +160,7 @@ from src.ScheduleCreator import ScheduleCreator
 from src.sorter.DosenSorter import DosenSorter
 from src.sorter.MatkulNameSorter import MatkulNameSorter
 from src.sorter.IdMatkulSorter import IdMatkulSorter
+from src.sorter.KodeMatkulSorter import KodeMatkulSorter
 
 list_matkul = FileOperation.read("bello.src")
 
