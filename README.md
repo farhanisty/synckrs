@@ -120,7 +120,65 @@ Untuk memilih suatu jadwal pastikan sudah mengetahui id jadwal yang akan dipilih
 ...
 
 # Ganti angka 1 dengan id matkul yang akan diambil
-schedule_creator(1)
+schedule_creator.choose(1)
 ```
 Setelah mengambil suatu jadwal, secara otomatis akan mengeliminasi jadwal-jadwal yang bertabrakan ataupun matkul yang telah dipilih. Untuk melihat jadwal-jadwal yang tereliminasi bisa menggunakan schedule_creator.showUnavailable().
 
+### Sort
+```python
+...
+
+from src.sorter.DosenSorter import DosenSorter # sort berdasarkan nama dosen
+from src.sorter.MatkulNameSorter import MatkulNameSorter # sort berdasarkan nama matkul
+from src.sorter.IdMatkulSorter import IdMatkulSorter # sort berdasarkan id matkul/hari
+
+...
+
+# tuliskan sebelum menampilkan jadwal
+schedule_creator.getRenderInvoker().sort(DosenMatkulSorter()) # DosenMatkulSorter bisa diganti dengan ketiga objek sorter di atas
+schedule_creator.showAvailable()
+```
+
+#### Mode
+Terdapat dua buah mode sort, yaitu ASC dan DESC. Secara otomatis, perintah di atas akan mensortir dengan mode ASC(dari kecil ke besar). Untuk merubah menjadi mode DESC:
+```python
+...
+
+schedule_creator.getRenderInvoker().sort(MatkulNameSorter()).changeMode("DESC")
+
+...
+```
+
+### Contoh
+
+```python
+from src.FileOperatin import FileOperation
+from src.MatkulScrapper import InformatikaMatkulScrapper
+from src.MatkulScrapper import SistemInformasiMatkulScrapper
+from src.ScheduleCreator import ScheduleCreator
+from src.sorter.DosenSorter import DosenSorter
+from src.sorter.MatkulNameSorter import MatkulNameSorter
+from src.sorter.IdMatkulSorter import IdMatkulSorter
+
+list_matkul = FileOperation.read("bello.src")
+
+matkul_scrapper = InformatikaMatkulScrapper() # prodi Informatika
+
+parsed_matkul = matkul_scrapper.generate(list_matkul)
+
+filter_matkul = matkul_scrapper.union(matkul_scrapper.getMatkulList(), parsed_matkul)
+
+schedule_creator = ScheduleCreator(filter_matkul)
+
+schedule_creator.choose(70)
+schedule_creator.choose(84)
+
+schedule_creator.showChoosed()
+
+schedule_creator.getRenderInvoker().sort(MatkulNameSorter())
+schedule_creator.showAvailable()
+
+schdule_creator.getRenderInvoker().sort(DosenMatkulSorter()).changeMode("DESC")
+schedule_creator.showUnavailable()
+
+```
