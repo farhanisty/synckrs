@@ -56,15 +56,15 @@ python3 main.py
 - ### MatkulScrapper
   Objek ini bertanggung jawab untuk parsing hasil list_matkul.
   ```python
-  from src.FileOperatin import FileOperation
-  from src.MatkulScrapper import InformatikaMatkulScrapper # untuk prodi Informatika
-  from src.MatkulScrapper import SistemInformasiMatkulScrapper # Untuk prodi Sistem Informasi
+  from src.FileOperation import FileOperation
+  from src.MatkulScraper import InformatikaMatkulScraper # untuk prodi Informatika
+  from src.MatkulScraper import SistemInformasiMatkulScraper # Untuk prodi Sistem Informasi
 
   list_matkul = FileOperation.read("bello.src")
 
   # Instaniasi MatkulScrapper, gunakan salah satu saja
-  matkul_scrapper = InformatikaMatkulScrapper() # prodi Informatika
-  matkul_scrapper = SistemInformasiMatkulScrapper() # prodi Sistem Informasi
+  matkul_scrapper = InformatikaMatkulScraper() # prodi Informatika
+  matkul_scrapper = SistemInformasiMatkulScraper() # prodi Sistem Informasi
 
   # Parsing list_matkul
   parsed_matkul = matkul_scrapper.generate(list_matkul)
@@ -75,15 +75,15 @@ python3 main.py
 - ### ScheduleCreator
   Objek ini yang menjadi interface untuk menggunakan SYNCKRS.
   ```python
-  from src.FileOperatin import FileOperation
-  from src.MatkulScrapper import InformatikaMatkulScrapper
-  from src.MatkulScrapper import SistemInformasiMatkulScrapper
+  from src.FileOperation import FileOperation
+  from src.MatkulScraper import InformatikaMatkulScraper
+  from src.MatkulScraper import SistemInformasiMatkulScraper
   from src.ScheduleCreator import ScheduleCreator # import ScheduleCreator
 
   list_matkul = FileOperation.read("bello.src")
   
-  matkul_scrapper = InformatikaMatkulScrapper() # prodi Informatika
-  matkul_scrapper = SistemInformasiMatkulScrapper() # prodi Sistem Informasi
+  matkul_scrapper = InformatikaMatkulScraper() # prodi Informatika
+  matkul_scrapper = SistemInformasiMatkulScraper() # prodi Sistem Informasi
   
   parsed_matkul = matkul_scrapper.generate(list_matkul)
 
@@ -135,7 +135,7 @@ from src.sorter.IdMatkulSorter import IdMatkulSorter # sort berdasarkan id matku
 ...
 
 # tuliskan sebelum menampilkan jadwal
-schedule_creator.getRenderInvoker().sort(DosenMatkulSorter()) # DosenMatkulSorter bisa diganti dengan ketiga objek sorter di atas
+schedule_creator.getRenderInvoker().sort(DosenSorter()) # DosenSorter bisa diganti dengan ketiga objek sorter di atas
 schedule_creator.showAvailable()
 ```
 
@@ -152,21 +152,22 @@ schedule_creator.getRenderInvoker().sort(MatkulNameSorter()).changeMode("DESC")
 ### Contoh
 
 ```python
-from src.FileOperatin import FileOperation
-from src.MatkulScrapper import InformatikaMatkulScrapper
-from src.MatkulScrapper import SistemInformasiMatkulScrapper
+from src.FileOperation import FileOperation
+from src.MatkulScraper import InformatikaMatkulScraper
+from src.MatkulScraper import SistemInformasiMatkulScraper
 from src.ScheduleCreator import ScheduleCreator
 from src.sorter.DosenSorter import DosenSorter
 from src.sorter.MatkulNameSorter import MatkulNameSorter
 from src.sorter.IdMatkulSorter import IdMatkulSorter
 
-list_matkul = FileOperation.read("bello.src")
+list_matkul = FileOperation.read("data.src")
 
-matkul_scrapper = InformatikaMatkulScrapper() # prodi Informatika
+matkul_scrapper = InformatikaMatkulScraper()  # prodi Informatika
 
 parsed_matkul = matkul_scrapper.generate(list_matkul)
 
-filter_matkul = matkul_scrapper.union(matkul_scrapper.getMatkulList(), parsed_matkul)
+filter_matkul = matkul_scrapper.union(
+    matkul_scrapper.getMatkulList(), parsed_matkul)
 
 schedule_creator = ScheduleCreator(filter_matkul)
 
@@ -178,7 +179,7 @@ schedule_creator.showChoosen()
 schedule_creator.getRenderInvoker().sort(MatkulNameSorter())
 schedule_creator.showAvailable()
 
-schdule_creator.getRenderInvoker().sort(DosenMatkulSorter()).changeMode("DESC")
+schedule_creator.getRenderInvoker().sort(DosenSorter()).changeMode("DESC")
 schedule_creator.showUnavailable()
 
 ```
