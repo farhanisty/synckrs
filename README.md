@@ -111,7 +111,7 @@ Terdapat tiga opsi untuk menampilkan jadwal:
   ```python
   ...
 
-  schedule_creator.showChoosed()
+  schedule_creator.showChoosen()
   ```
 
 ### Memilih Jadwal
@@ -173,7 +173,7 @@ schedule_creator = ScheduleCreator(filter_matkul)
 schedule_creator.choose(70)
 schedule_creator.choose(84)
 
-schedule_creator.showChoosed()
+schedule_creator.showChoosen()
 
 schedule_creator.getRenderInvoker().sort(MatkulNameSorter())
 schedule_creator.showAvailable()
