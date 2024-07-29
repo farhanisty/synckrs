@@ -32,5 +32,5 @@ pip3 install prettytable
 ### SYNCKRS
 Clone repository SYNCKRS.
 ```shell
-git clonse https://gthub.com/farhanisty/synckrs.git
+git clonse https://github.com/farhanisty/synckrs.git
 ```
