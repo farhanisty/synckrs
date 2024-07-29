@@ -6,40 +6,24 @@ from src.sorter.DosenSorter import DosenSorter
 from src.sorter.MatkulNameSorter import MatkulNameSorter
 from src.sorter.IdMatkulSorter import IdMatkulSorter
 
+list_matkul = FileOperation.read("data.src")
 
-scrapper = SistemInformasiMatkulScraper()
-hasil = scrapper.union(scrapper.getMatkulList(), scrapper.generate(
-    FileOperation.read("matkulsi.src"))
-)
+matkul_scrapper = InformatikaMatkulScraper()  # prodi Informatika
 
-scheduleCreator = ScheduleCreator(hasil)
+parsed_matkul = matkul_scrapper.generate(list_matkul)
 
-scheduleCreator.showAvailable()
+filter_matkul = matkul_scrapper.union(
+    matkul_scrapper.getMatkulList(), parsed_matkul)
 
-# scheduleCreator.choose(70)
-# scheduleCreator.choose(47)
-# scheduleCreator.choose(34)
-# scheduleCreator.choose(84)
-# scheduleCreator.choose(104)
-# scheduleCreator.choose(156)
-# scheduleCreator.choose(126)
-# scheduleCreator.choose(141)
-# scheduleCreator.choose(111)
-# scheduleCreator.choose(124)
-# scheduleCreator.choose(173)
-# scheduleCreator.choose(147)
-# # scheduleCreator.choose(23)
-# # scheduleCreator.choose(48)
-#
-# scheduleCreator.getRenderInvoker().sort(IdMatkulSorter())
-# scheduleCreator.showChoosen()
-#
-# # scheduleCreator.showUnavailable()
-# # scheduleCreator.getRenderInvoker().sort(MatkulNameSorter())
-# # scheduleCreator.showAvailable()
-#
-# scheduleCreator.getRenderInvoker().sort(MatkulNameSorter())
-# scheduleCreator.showUnavailable()
-# #
-# # scheduleCreator.getRenderInvoker().sort(IdMatkulSorter()).changeMode("ASC")
-# # scheduleCreator.showAvailable()
+schedule_creator = ScheduleCreator(filter_matkul)
+
+schedule_creator.choose(70)
+schedule_creator.choose(84)
+
+schedule_creator.showChoosen()
+
+schedule_creator.getRenderInvoker().sort(MatkulNameSorter())
+schedule_creator.showAvailable()
+
+schedule_creator.getRenderInvoker().sort(DosenSorter()).changeMode("DESC")
+schedule_creator.showUnavailable()
