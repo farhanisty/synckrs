@@ -15,7 +15,7 @@ Aplikasi untuk mempermudah perencanaan krs.
 #### WIndows
 Pada sistem operasi windows, pip akan otomatis terinstall jika sudah menginstall python.
 #### Linux
-Berbeda denan windows, untuk sistem operasi berbasis linux python versi 3 menggunakan pip3. Di beberapa distro linux tidak mengincludekan pip3 sebagai package bawaan.
+Berbeda denan windows, untuk sistem operasi berbasis linux python versi 3 menggunakan pip3. Beberapa distro linux tidak mengincludekan pip3 sebagai package bawaan.
 ```shell
 sudo apt install python3-pip
 ```
@@ -45,7 +45,7 @@ python3 main.py
 ```
 ## Dokumentasi
 - ### FileOperation
-  Objek ini digunakan untuk membaca file *.src lalu dirubah menjadi python list dengan menggunakan _read_ method. Method tersebut bersifat static yang artinya tidak perlu melakukan instansiasi terlebih dahulu.
+  Objek ini digunakan untuk membaca file *.src lalu mengubah text source menjadi python list dengan menggunakan _read_ method. Method tersebut bersifat static yang artinya tidak perlu melakukan instansiasi terlebih dahulu.
   ```python
   # import FileOperation class
   from src.FileOperation import FileOperation
